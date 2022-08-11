@@ -1,0 +1,13 @@
+import("./tokeniser.fox")
+import("./parser.fox")
+import("io")
+import("arrays")
+
+var(tokens, tokenise("(max 10 20 30)"))
+println("=== TOKENS ===")
+printArr(tokens)
+println("")
+
+println("=== AST ===")
+var(ast, parse(tokens))
+printArr(ast)

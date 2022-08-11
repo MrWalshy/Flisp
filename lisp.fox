@@ -1,0 +1,27 @@
+import("io")
+import("arrays")
+import("./tokeniser.fox")
+import("./parser.fox")
+import("./environment.fox")
+import("./interpreter.fox")
+
+
+var(env, standardEnvironment([
+	["test", '(args) -> print(env)]
+]))
+while({
+	var(in, input("flisp > "))
+	match in {
+		""     => println("Empty input is invalid\n")
+		"exit" => break()
+		"time" => {
+			var(expression, input("flisp (timed) > "))
+			var(start, clock())
+			var(result, eval(parse(tokenise(expression)), env))
+			var(end, clock())
+			println(result)
+			println("Finished in '" + (end - start) + "' seconds.")
+		}
+		_      => println(eval(parse(tokenise(in)), env) + "\n")
+	}
+})
